@@ -18,7 +18,12 @@ public class merkle{
 		//Iterate the mkblock and show the value
 		for(int i = 0; i < mkblock.size(); i++) {
 			System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
+			String code = mkblock.get(i).create_hash();
+			System.out.println(code);
+			System.out.println();
 		}
+		
+		
 	}
 	
 	
