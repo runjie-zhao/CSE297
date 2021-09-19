@@ -1,8 +1,10 @@
 import java.security.*;
 
 public class merkleblock{
+	//Only leaf needs address and value
 	String address;
 	int value;
+	//compute the hash from left + right or from address + value
 	String hash;
 	public merkleblock() {
 		return;
@@ -17,6 +19,23 @@ public class merkleblock{
 	//Create the hash based on address and value
 	public String create_hash() {
 		String message = this.address + this.value;
+		MessageDigest md;
+		String encode="";
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(message.getBytes("UTF-8"));
+			encode = byte2Hex(md.digest());
+		}catch(Exception e) {
+			System.out.println("Either no such algorithm or no supported encoding");
+			System.exit(0);
+		}
+		this.hash = encode;
+		return encode;
+	}
+	
+	//Create the hash from left node and right node
+	public String create_hash(String right, String left) {
+		String message = right+left;
 		MessageDigest md;
 		String encode="";
 		try {

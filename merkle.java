@@ -19,10 +19,12 @@ public class merkle{
 		for(int i = 0; i < mkblock.size(); i++) {
 			System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
 			String code = mkblock.get(i).create_hash();
-			System.out.println(code);
+			mkblock.get(i).hash = code;
+			System.out.println(mkblock.get(i).hash);
 			System.out.println();
 		}
-		
+		String finalval = get_root(mkblock);
+		System.out.println(finalval);
 		
 	}
 	
@@ -84,5 +86,35 @@ public class merkle{
 	public static void Assign(String address, int value) {
 		merkleblock mk = new merkleblock(address, value);
 		mkblock.add(mk);
+	}
+	
+	//Get hash from left and right and store all final values in an array
+	public static ArrayList<merkleblock> get_hash(ArrayList<merkleblock> mk_arr) {
+		ArrayList<merkleblock> new_arr = new ArrayList<>();
+		for(int i = 0; i < mk_arr.size();i++) {
+			//Store the left value at first
+			String left_hash = mk_arr.get(i).hash;
+			//Move i to the next index
+			i++;
+			String right_hash = "";
+			if(i < mk_arr.size()) {
+				right_hash = mk_arr.get(i).hash;
+			}
+			merkleblock temp = new merkleblock();
+			temp.create_hash(right_hash, left_hash);
+			new_arr.add(temp);
+		}
+		return new_arr;
+	}
+	
+	//Figure out the root
+	public static String get_root(ArrayList<merkleblock> mk_arr) {
+		ArrayList<merkleblock> arr = new ArrayList<>();
+		ArrayList<merkleblock> final_arr = new ArrayList<>();
+		arr = get_hash(mk_arr);
+		while(arr.size()!=1) {
+			arr = get_hash(arr);
+		}
+		return arr.get(0).hash;
 	}
 }
