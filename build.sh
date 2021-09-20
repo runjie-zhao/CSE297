@@ -7,6 +7,7 @@ cat *.java >> build/allcode.java
 cp run build
 cp recompile build
 cd build
+./recompile
 zip -r ../anno.zip .
 cd ..
 rm -rf build
