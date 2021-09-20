@@ -8,6 +8,6 @@ cp run build
 cp recompile build
 cd build
 ./recompile
-zip -r ../anno.zip .
+zip -r ../doge.zip .
 cd ..
 rm -rf build
