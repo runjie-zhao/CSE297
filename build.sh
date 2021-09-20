@@ -4,10 +4,10 @@ mkdir build
 mkdir build/code
 cp *.java build/code
 cat *.java >> build/allcode.java
-cp run build
-cp recompile build
+cp scripts/run build
+cp scripts/recompile build
 cd build
-./recompile
+bash recompile
 zip -r ../doge.zip .
 cd ..
 rm -rf build
