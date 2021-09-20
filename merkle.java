@@ -8,21 +8,16 @@ public class merkle{
 	public static ArrayList<merkleblock> mkblock = new ArrayList<>();
 	
 	public static void main(String []args) {
-		
-		System.out.println(Read("xt.txt"));
-		System.out.println();
-		System.out.println("Elements are" + address);
-		System.out.println();
-		System.out.println("Elements integer are " + value);
-		System.out.println();
+		String filepath = user_input();
+		Read(filepath);
 		//Iterate the mkblock and show the value
 		for(int i = 0; i < mkblock.size(); i++) {
-			System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
+			//System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
 			String code = mkblock.get(i).create_hash();
 			mkblock.get(i).hash = code;
-			System.out.println(mkblock.get(i).hash);
-			System.out.println();
+			//System.out.println(mkblock.get(i).hash);
 		}
+		System.out.println("Final Root is: ");
 		String finalval = get_root(mkblock);
 		System.out.println(finalval);
 		
@@ -67,7 +62,7 @@ public class merkle{
 		    return sbf.toString();
 		}catch (IOException e) {
 		   System.out.println("File Cannot Be Found");
-		   e.printStackTrace();
+		   System.exit(0);
 		} finally {
 		   if (reader != null) {
 		    try {
@@ -75,6 +70,7 @@ public class merkle{
 		    } catch (IOException e1) {
 		    	System.out.println("Reader Cannot Be Closed");
 		        e1.printStackTrace();
+		        System.exit(0);
 		     }
 		    }
 		  }
@@ -116,5 +112,19 @@ public class merkle{
 			arr = get_hash(arr);
 		}
 		return arr.get(0).hash;
+	}
+	
+	public static String user_input() {
+		Scanner sc =  new Scanner(System.in);
+		System.out.println("Please enter the txt file");
+		String filename = "";
+		try {
+			filename = sc.nextLine();
+			return filename;
+		}catch(Exception e) {
+			System.out.println("Please enter the useable input value");
+			System.exit(0);
+		}
+		return filename;
 	}
 }
