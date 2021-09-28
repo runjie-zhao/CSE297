@@ -32,7 +32,7 @@ public class merkle{
 				//System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
 				String code = mkblock.get(i).create_hash();
 				mkblock.get(i).hash = code;
-				System.out.println(mkblock.get(i).hash);
+				//System.out.println(mkblock.get(i).hash);
 			}
 			allblock.add(mkblock);
 			
