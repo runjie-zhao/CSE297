@@ -40,7 +40,6 @@ public class merkle{
 			String finalval = get_root(mkblock);
 			merkleblock rootb = new merkleblock(finalval);
 			rootblock.add(rootb);
-			System.out.println("Time is "+rootb.timestamp);
 			//Used for test nonce
 			
 			
@@ -201,7 +200,7 @@ public class merkle{
 	
 	//choose the nonce
 	public static String nonce_choice(String target) {
-		System.out.println("Size is "+rootblock.size());
+		System.out.println("\nNumber of block or input txt file are/is "+rootblock.size());
 		char carr[] = new char[64];
 		for(int i = 0; i < 64; i++) {
 			carr[i]='0';
@@ -215,7 +214,7 @@ public class merkle{
 				
 				String res = rootblock.get(k).test(val,rootblock.get(k).hash);
 				if(res.compareTo(target)<=0) {
-					System.out.println("result is " + res + "\n" + "val " + val + "\n");
+					System.out.println("Result of (nonce + root hash)'s sha256 is " + res + "\n" + "Value of nonce " + val + "\n");
 					rootblock.get(k).nonce = val;
 					judge = true;
 					break;
