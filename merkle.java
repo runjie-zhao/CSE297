@@ -39,15 +39,8 @@ public class merkle{
 			//Define the root block
 			String finalval = get_root(mkblock);
 			merkleblock rootb = new merkleblock(finalval);
-			if(counter == 0) {
-				counter++;
-				rootb.previoushash="0";
-			}else {
-				rootb.previoushash=rootblock.get(counter-1).hash;
-				counter++;
-			}
 			rootblock.add(rootb);
-			
+			System.out.println("Time is "+rootb.timestamp);
 			//Used for test nonce
 			
 			
@@ -86,6 +79,14 @@ public class merkle{
 			//System.out.println(finalval);
 		}
 		nonce_choice(eval);
+		header_create();
+		for(int i = 0; i < rootblock.size(); i++) {
+			//System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
+			//String code = mkblock.get(i).create_hash();
+			//mkblock.get(i).hash = code;
+			//System.out.println(mkblock.get(i).hash);
+			System.out.println("Header of block "+(i+1)+" is " + rootblock.get(i).header);
+		}
 	}
 	
 	
@@ -215,7 +216,7 @@ public class merkle{
 				String res = rootblock.get(k).test(val,rootblock.get(k).hash);
 				if(res.compareTo(target)<=0) {
 					System.out.println("result is " + res + "\n" + "val " + val + "\n");
-					rootblock.get(k).nonce = res;
+					rootblock.get(k).nonce = val;
 					judge = true;
 					break;
 				}
@@ -227,5 +228,17 @@ public class merkle{
 		}
 		
 		return target;
+	}
+	
+	//Create header
+	public static void header_create() {
+		for(int i = 0; i < rootblock.size(); i++) {
+			if(i==0) {
+				rootblock.get(i).header="0";
+			}else {
+				String value = rootblock.get(i).previoushash + rootblock.get(i).hash + rootblock.get(i).timestamp + rootblock.get(i).target;
+				rootblock.get(i).header = rootblock.get(i).create_hash(value,rootblock.get(i).nonce);
+			}
+		}
 	}
 }
