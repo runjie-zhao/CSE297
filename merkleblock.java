@@ -3,7 +3,7 @@ import java.util.*;
 
 public class merkleblock{
 	//Header
-	String header;
+	//String header;
 	//Only leaf needs address and value
 	String address;
 	int value;

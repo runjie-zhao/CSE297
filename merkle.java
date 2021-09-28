@@ -41,6 +41,10 @@ public class merkle{
 			merkleblock rootb = new merkleblock(finalval);
 			if(counter == 0) {
 				counter++;
+				rootb.previoushash="0";
+			}else {
+				rootb.previoushash=rootblock.get(counter-1).hash;
+				counter++;
 			}
 			rootblock.add(rootb);
 			
@@ -206,20 +210,21 @@ public class merkle{
 			rootblock.get(k).target = target;
 			judge = false;
 			for(int i = 0; i < Integer.MAX_VALUE; i++) {
-					String val = Integer.toHexString(i);
+				String val = Integer.toHexString(i);
 				
-					String res = rootblock.get(k).test(val,rootblock.get(k).hash);
-					if(res.compareTo(target)<=0) {
-						System.out.println("result is " + res + "\n");
-						rootblock.get(k).nonce = res;
-						judge = true;
-						break;
-					}
+				String res = rootblock.get(k).test(val,rootblock.get(k).hash);
+				if(res.compareTo(target)<=0) {
+					System.out.println("result is " + res + "\n" + "val " + val + "\n");
+					rootblock.get(k).nonce = res;
+					judge = true;
+					break;
 				}
 				if(judge) {
 					break;
 				}
 			}
+				
+		}
 		
 		return target;
 	}
