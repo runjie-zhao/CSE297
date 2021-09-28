@@ -6,21 +6,82 @@ public class merkle{
 	public static ArrayList<String> address = new ArrayList<>();
 	public static ArrayList<Integer> value = new ArrayList<>();
 	public static ArrayList<merkleblock> mkblock = new ArrayList<>();
+	public static ArrayList<merkleblock> rootblock = new ArrayList<>();
+	public static ArrayList<ArrayList<merkleblock>> allblock = new ArrayList<>();
 	
 	public static void main(String []args) {
 		String filepath = user_input();
-		Read(filepath);
-		//Iterate the mkblock and show the value
-		for(int i = 0; i < mkblock.size(); i++) {
-			//System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
-			String code = mkblock.get(i).create_hash();
-			mkblock.get(i).hash = code;
-			//System.out.println(mkblock.get(i).hash);
-		}
-		System.out.println("Final Root is: ");
-		String finalval = get_root(mkblock);
-		System.out.println(finalval);
+		String []arr=filepath.split("\\s+");
 		
+		//Create the target
+		
+		String eval = "";
+		for(int i = 0; i < 64; i++) {
+			if(i==0) {
+				eval = eval + "7";
+			}else {
+				eval = eval + "f";
+			}
+		}
+		
+		int counter = 0;
+		for(String ss : arr) { 
+			Read(ss);
+			//Iterate the mkblock and show the value
+			for(int i = 0; i < mkblock.size(); i++) {
+				//System.out.println(mkblock.get(i).address + " " + mkblock.get(i).value);
+				String code = mkblock.get(i).create_hash();
+				mkblock.get(i).hash = code;
+				System.out.println(mkblock.get(i).hash);
+			}
+			allblock.add(mkblock);
+			
+			//Define the root block
+			String finalval = get_root(mkblock);
+			merkleblock rootb = new merkleblock(finalval);
+			if(counter == 0) {
+				counter++;
+			}
+			rootblock.add(rootb);
+			
+			//Used for test nonce
+			
+			
+			/*char carr[] = new char[64];
+			for(int i = 0; i < 64; i++) {
+				carr[i]='0';
+			}
+			
+			boolean judge = false;
+			for(int i = 0; i < 64; i++) {
+				for(int j = 0; j < 16; j++) {
+					String val = Integer.toHexString(j);
+					carr[63-i]=val.charAt(0);
+					String val1 = new String(carr);
+					String res = mkblock.get(0).test(val1,finalval);
+					if(res.compareTo(eval)<0) {
+						System.out.println("Our nonce is " + val1 + "\n And result is " + res + "\n Gap" + eval);
+						judge = true;
+						break;
+					}
+				}
+				if(judge) {
+					break;
+				}
+			}*/
+			
+			
+			//System.out.println("char "+carr[1]);
+			//int result = Integer.parseInt(temp,16);
+			//System.out.println("16=>"+result);
+			//String res = mkblock.get(0).test(temp,finalval);
+			//System.out.println("Result after nonce is "+ res);
+			//Test ends
+			
+			//System.out.println("Final Root is: ");
+			//System.out.println(finalval);
+		}
+		nonce_choice(eval);
 	}
 	
 	
@@ -38,6 +99,11 @@ public class merkle{
 	    try {
 	    	reader = new BufferedReader(new FileReader(file));
 		    String tempStr;
+		    
+		    //test
+		    mkblock = new ArrayList<>();
+		    //test ends
+		    
 		    while ((tempStr = reader.readLine()) != null) {
 		    	//Test if each line is composed of two value
 		    	String []arr = tempStr.split("\\s+");
@@ -116,7 +182,7 @@ public class merkle{
 	
 	public static String user_input() {
 		Scanner sc =  new Scanner(System.in);
-		System.out.println("Please enter the txt file");
+		System.out.println("Please enter the txt files");
 		String filename = "";
 		try {
 			filename = sc.nextLine();
@@ -126,5 +192,35 @@ public class merkle{
 			System.exit(0);
 		}
 		return filename;
+	}
+	
+	//choose the nonce
+	public static String nonce_choice(String target) {
+		System.out.println("Size is "+rootblock.size());
+		char carr[] = new char[64];
+		for(int i = 0; i < 64; i++) {
+			carr[i]='0';
+		}
+		boolean judge = false;
+		for(int k = 0; k < rootblock.size();k++) {
+			rootblock.get(k).target = target;
+			judge = false;
+			for(int i = 0; i < Integer.MAX_VALUE; i++) {
+					String val = Integer.toHexString(i);
+				
+					String res = rootblock.get(k).test(val,rootblock.get(k).hash);
+					if(res.compareTo(target)<=0) {
+						System.out.println("result is " + res + "\n");
+						rootblock.get(k).nonce = res;
+						judge = true;
+						break;
+					}
+				}
+				if(judge) {
+					break;
+				}
+			}
+		
+		return target;
 	}
 }
