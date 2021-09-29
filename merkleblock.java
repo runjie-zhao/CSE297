@@ -96,7 +96,7 @@ public class merkleblock{
 
 	@Override
 	public String toString() {
-		String res = String.format("BEGIN BLOCK\nBEGIN HEADER\n%s\nEND HEADER\n%s %s\nEND BLOCK\n", header, address, value);
+		String res = String.format("BEGIN BLOCK\nBEGIN HEADER\n%s\nEND HEADER\n%s %s\nEND BLOCK", header, address, value);
 		return res;
 	}
 
