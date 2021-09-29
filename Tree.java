@@ -1,14 +1,35 @@
 import java.util.*;
+
+//import org.w3c.dom.Node;
+
 import java.math.*;
 import java.io.*;
 
 public class Tree{
 	//Initialize three variables which are address, value and mkblock
-	public static ArrayList<String> address = new ArrayList<>();
-	public static ArrayList<Integer> value = new ArrayList<>();
+	private ArrayList<Node> node_list = new ArrayList<>();
+	private Node rootnode = new Node();
 	public static ArrayList<Node> mkblock = new ArrayList<>();
 	public static ArrayList<Node> rootblock = new ArrayList<>();
 	public static ArrayList<ArrayList<Node>> allblock = new ArrayList<>();
+	
+	public Tree(ArrayList<String> address, ArrayList<Integer> value) {
+		for(int i = 0; i < address.size(); i++) {
+			Node node = new Node(address.get(i),value.get(i));
+			node.create_hash();
+			node_list.add(node);
+		}
+		rootnode.hash = get_root(node_list);
+		
+	}
+	
+	public Node get_rootNode() {
+		return rootnode;
+	}
+	
+	public ArrayList<Node> get_list(){
+		return node_list;
+	}
 	
 	public static void main(String []args) {
 		String filepath = user_input();
