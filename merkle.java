@@ -240,4 +240,13 @@ public class merkle{
 			}
 		}
 	}
+
+	public static void printConsole(merkleblock block) {
+		System.out.println("BEGIN BLOCK");
+		System.out.println("BEGIN HEADER");
+		System.out.println(block.header);
+		System.out.println("END HEADER");
+		System.out.printf("%s %s\n", block.address, block.value);
+		System.out.println("END BLOCK\n");
+	}
 }
