@@ -1,4 +1,5 @@
 import java.util.*;
+import java.math.*;
 import java.io.*;
 
 public class merkle{
@@ -209,7 +210,8 @@ public class merkle{
 		for(int k = 0; k < rootblock.size();k++) {
 			rootblock.get(k).target = target;
 			judge = false;
-			for(int i = 0; i < Integer.MAX_VALUE; i++) {
+			while(!judge){
+				int i = (int)(Math.random()*10000);
 				String val = Integer.toHexString(i);
 				
 				String res = rootblock.get(k).test(val,rootblock.get(k).hash);
