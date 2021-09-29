@@ -1,7 +1,7 @@
 import java.security.*;
 import java.util.*;
 
-public class merkleblock{
+public class Node{
 	//Header
 	String header;
 	//Only leaf needs address and value
@@ -15,20 +15,20 @@ public class merkleblock{
 	String previoushash;
 	String nonce;
 	String target;
-	public merkleblock() {
+	public Node() {
 		this.timestamp = new Date().getTime();
 		return;
 	}
 	
 	//Initialize the merkleblock
-	public merkleblock(String address, int value) {
+	public Node(String address, int value) {
 		this.timestamp = new Date().getTime();
 		this.address = address;
 		this.value = value;
 	}
 	
 	//Initialize the merkleblock
-	public merkleblock(String hash) {
+	public Node(String hash) {
 		this.timestamp = new Date().getTime();
 		this.hash = hash;
 	}

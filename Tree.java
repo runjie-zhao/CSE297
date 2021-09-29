@@ -2,13 +2,13 @@ import java.util.*;
 import java.math.*;
 import java.io.*;
 
-public class merkle{
+public class Tree{
 	//Initialize three variables which are address, value and mkblock
 	public static ArrayList<String> address = new ArrayList<>();
 	public static ArrayList<Integer> value = new ArrayList<>();
-	public static ArrayList<merkleblock> mkblock = new ArrayList<>();
-	public static ArrayList<merkleblock> rootblock = new ArrayList<>();
-	public static ArrayList<ArrayList<merkleblock>> allblock = new ArrayList<>();
+	public static ArrayList<Node> mkblock = new ArrayList<>();
+	public static ArrayList<Node> rootblock = new ArrayList<>();
+	public static ArrayList<ArrayList<Node>> allblock = new ArrayList<>();
 	
 	public static void main(String []args) {
 		String filepath = user_input();
@@ -39,7 +39,7 @@ public class merkle{
 			
 			//Define the root block
 			String finalval = get_root(mkblock);
-			merkleblock rootb = new merkleblock(finalval);
+			Node rootb = new Node(finalval);
 			rootblock.add(rootb);
 			//Used for test nonce
 			
@@ -151,13 +151,13 @@ public class merkle{
 	
 	//Create a new merkleblock class and assign the address and value to it.
 	public static void Assign(String address, int value) {
-		merkleblock mk = new merkleblock(address, value);
+		Node mk = new Node(address, value);
 		mkblock.add(mk);
 	}
 	
 	//Get hash from left and right and store all final values in an array
-	public static ArrayList<merkleblock> get_hash(ArrayList<merkleblock> mk_arr) {
-		ArrayList<merkleblock> new_arr = new ArrayList<>();
+	public static ArrayList<Node> get_hash(ArrayList<Node> mk_arr) {
+		ArrayList<Node> new_arr = new ArrayList<>();
 		for(int i = 0; i < mk_arr.size();i++) {
 			//Store the left value at first
 			String left_hash = mk_arr.get(i).hash;
@@ -167,7 +167,7 @@ public class merkle{
 			if(i < mk_arr.size()) {
 				right_hash = mk_arr.get(i).hash;
 			}
-			merkleblock temp = new merkleblock();
+			Node temp = new Node();
 			temp.create_hash(right_hash, left_hash);
 			new_arr.add(temp);
 		}
@@ -175,9 +175,9 @@ public class merkle{
 	}
 	
 	//Figure out the root
-	public static String get_root(ArrayList<merkleblock> mk_arr) {
-		ArrayList<merkleblock> arr = new ArrayList<>();
-		ArrayList<merkleblock> final_arr = new ArrayList<>();
+	public static String get_root(ArrayList<Node> mk_arr) {
+		ArrayList<Node> arr = new ArrayList<>();
+		ArrayList<Node> final_arr = new ArrayList<>();
 		arr = get_hash(mk_arr);
 		while(arr.size()!=1) {
 			arr = get_hash(arr);
@@ -243,7 +243,7 @@ public class merkle{
 		}
 	}
 
-	public static void printBlock(merkleblock block) {
+	public static void printBlock(Node block) {
 		System.out.println(block);
 	}
 }
