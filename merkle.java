@@ -241,7 +241,7 @@ public class merkle{
 		}
 	}
 
-	public static void printConsole(merkleblock block) {
+	public static void printBlock(merkleblock block) {
 		System.out.println(block);
 	}
 }
