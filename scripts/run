@@ -1,3 +1,2 @@
 #!/bin/bash
-cd code
-java merkle
+java -jar cli.jar

@@ -1,3 +1,5 @@
 #!/bin/bash
 cd code
 javac *.java
+jar cfm ../cli.jar Manifest.txt *.class
+rm -f *.class
