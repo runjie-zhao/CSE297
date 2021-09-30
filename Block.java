@@ -86,21 +86,32 @@ public class Block{
         }
 	}
 
-    public void printBlock(boolean detail){
-        System.out.println("BEGIN BLOCK");
-        System.out.println("BEGIN HEADER");
-        System.out.println("previous block: "+previoushash);
-        System.out.println("root: "+ hashRoot);
-        System.out.println("timestamp: "+ timestamp);
-        System.out.println("difficulty target: "+ target);
-        System.out.println("nonce: "+nonce);
+    public String printBlock(boolean detail){
+        String result = "";
+        //System.out.println("BEGIN BLOCK");
+        result = result+"BEGIN BLOCK\n";
+        //System.out.println("BEGIN HEADER");
+        result = result+"BEGIN HEADER\n";
+        //System.out.println("previous block: "+previoushash);
+        result = result+"previous block: "+previoushash+"\n";
+        //System.out.println("root: "+ hashRoot);
+        result = result+"root: "+ hashRoot+"\n";
+        //System.out.println("timestamp: "+ timestamp);
+        result = result+"timestamp: "+ timestamp+"\n";
+        //System.out.println("difficulty target: "+ target);
+        result = result+"difficulty target: "+ target+"\n";
+        //System.out.println("nonce: "+nonce);
+        result = result+"nonce: "+nonce+"\n";
         if(detail){
             for(int i=0;i<currentT.node_list.size();i++){
-                System.out.println(currentT.node_list.get(i).getAddress()+" "+currentT.node_list.get(i).getValue());
+                //System.out.println(currentT.node_list.get(i).getAddress()+" "+currentT.node_list.get(i).getValue());
+                result = result+currentT.node_list.get(i).getAddress()+" "+currentT.node_list.get(i).getValue()+"\n";
             }
         }
-        System.out.println("END BLOCK");
-        System.out.println();
+        //System.out.println("END BLOCK");
+        //System.out.println();
+        result = result + "END BLOCK\n\n"
+        return result;
     }
 
     //Convert byte to hex
