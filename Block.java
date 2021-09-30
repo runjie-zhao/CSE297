@@ -110,7 +110,7 @@ public class Block{
         }
         //System.out.println("END BLOCK");
         //System.out.println();
-        result = result + "END BLOCK\n\n"
+        result = result + "END BLOCK\n";
         return result;
     }
 

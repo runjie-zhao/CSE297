@@ -8,7 +8,6 @@ public class Cli {
 		String input_string = "";
 		try {
 			input_string = sc.nextLine();
-			sc.close();
 		} catch (Exception e) {
 			System.out.println("Please enter the useable input value");
 			System.exit(0);
@@ -52,9 +51,9 @@ public class Cli {
 				Tree tree = new Tree(address, values);
 				Block block;
 				if (blocks.size() == 0) {
-					block= new Block(tree, 0.5);
+					block = new Block(tree, 0.5);
 				} else {
-					block = new Block(tree, blocks.get(blocks.size() -1 ), 0.5);
+					block = new Block(tree, blocks.get(blocks.size() - 1), 0.5);
 				}
 				blocks.add(block);
 			} catch (IOException e) {
@@ -63,9 +62,19 @@ public class Cli {
 			}
 		}
 		for (Block block : blocks) {
-			block.printBlock(true);
+			System.out.println(block.printBlock(true));
 		}
-		
+		File output = new File(filepaths[0].substring(0, filepaths[0].length() - 4) + ".block.out");
+		try (BufferedWriter ostream = new BufferedWriter(new FileWriter(output))) {
+			for (int i = blocks.size()-1; i >= 0; i--) {
+				ostream.write(blocks.get(i).printBlock(true));
+			}
+			ostream.newLine();
+			ostream.close();
+		} catch (IOException e) {
+			System.out.println("File Cannot Be Written");
+				System.exit(0);
+		}
 	}
 
 }
