@@ -8,7 +8,7 @@ public class Block{
     String nonce;
 	double target;
     Tree currentT;
-    public Block(String root,Tree ct, Block b, double t) {
+    public Block(Tree ct, Block b, double t) {
         currentT = ct;
         String message = b.previoushash+b.hashRoot+b.timestamp+b.nonce+b.target;
         MessageDigest md;
@@ -23,7 +23,7 @@ public class Block{
         }
         previoushash = encode;
         try {
-            message = root;
+            message = ct.get_rootNode().getHash();
             md = MessageDigest.getInstance("SHA-256");
             md.update(message.getBytes("UTF-8"));
             encode = byte2Hex(md.digest());
@@ -36,7 +36,7 @@ public class Block{
         target = t;
         try {
             for(int i=0; i<Integer.MAX_VALUE; i++){
-                message = Integer.toHexString(i)+root;
+                message = Integer.toHexString(i)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 encode = byte2Hex(md.digest());
@@ -51,14 +51,14 @@ public class Block{
         }
 	}
 
-    public Block(String root,Tree ct, double t) {
+    public Block(Tree ct, double t) {
         currentT = ct;
         String message = "";
         MessageDigest md;
         String encode="";
         previoushash = "0";
         try {
-            message = root;
+            message = ct.get_rootNode().getHash();;
             md = MessageDigest.getInstance("SHA-256");
             md.update(message.getBytes("UTF-8"));
             encode = byte2Hex(md.digest());
@@ -71,7 +71,7 @@ public class Block{
         target = t;
         try {
             for(int i=0; i<Integer.MAX_VALUE; i++){
-                message = Integer.toHexString(i)+root;
+                message = Integer.toHexString(i)+ct.get_rootNode().getHash();;
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 encode = byte2Hex(md.digest());
@@ -96,7 +96,7 @@ public class Block{
         System.out.println("nonce: "+nonce);
         if(detail){
             for(int i=0;i<currentT.node_list.size();i++){
-                System.out.println(currentT.node_list.get(i).address+" "+currentT.node_list.get(i).value);
+                System.out.println(currentT.node_list.get(i).getAddress()+" "+currentT.node_list.get(i).getValue());
             }
         }
         System.out.println("END BLOCK");
