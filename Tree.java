@@ -7,8 +7,8 @@ import java.io.*;
 
 public class Tree{
 	//Initialize three variables which are address, value and mkblock
-	private ArrayList<Node> node_list = new ArrayList<>();
-	private Node rootnode = new Node();
+	public ArrayList<Node> node_list = new ArrayList<>();
+	public Node rootnode = new Node();
 	public static ArrayList<Node> mkblock = new ArrayList<>();
 	public static ArrayList<Node> rootblock = new ArrayList<>();
 	public static ArrayList<ArrayList<Node>> allblock = new ArrayList<>();
@@ -138,10 +138,10 @@ public class Tree{
 		    		System.exit(0);
 		    	}
 		    	//Assign the value of arr[0] to address
-		    	address.add(arr[0]);
+		    	//address.add(arr[0]);
 		    	//Use try catch to test if the second value is an integer
 		    	try {
-		    		value.add(Integer.parseInt(arr[1]));
+		    		//value.add(Integer.parseInt(arr[1]));
 		    	}catch (Exception e) {
 		    		System.out.println("The second value is not an integer");
 		    		System.exit(0);
