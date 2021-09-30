@@ -10,8 +10,10 @@ public class Cli {
 			input_string = sc.nextLine();
 		} catch (Exception e) {
 			System.out.println("Please enter the useable input value");
+			sc.close();
 			System.exit(0);
 		}
+		sc.close();
 		String[] filepaths = input_string.split("\\s+");
 		ArrayList<Block> blocks = new ArrayList<>();
 		for (String filepath : filepaths) {
