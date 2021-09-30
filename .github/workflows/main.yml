@@ -24,10 +24,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2.3.1
+        with:
+          # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
+          java-version: 8
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: bash recompile
+        run: bash build.sh
       # Runs a set of commands using the runners shell
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.10
