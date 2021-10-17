@@ -112,6 +112,7 @@ public class Blockchain {
                 if(hashes2.size()%2!=0){
                     hashes1.add(hashes2.get(hashes2.size()-1));
                 }
+                index2 = index2/2;
             }
             results.add("previoushash: "+blocks.get(index1).previoushash+"\nhashRoot: "+blocks.get(index1).hashRoot+"\nTimeStamp: "+blocks.get(index1).timestamp+
             "\nnonce: "+blocks.get(index1).nonce+"\ntarget: "+blocks.get(index1).target);
