@@ -116,7 +116,7 @@ public class Block{
     }
 
     //Convert byte to hex
-	public String byte2Hex(byte[] bytes) {
+	public static String byte2Hex(byte[] bytes) {
 		String hex = "";
 		StringBuilder sb = new StringBuilder("");
         for (int n = 0; n < bytes.length; n++) {
