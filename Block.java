@@ -38,8 +38,9 @@ public class Block{
 		this.timestamp = new Date().getTime();
         target = t;
         try {
-            for(int i=0; i<Integer.MAX_VALUE; i++){
-                message = Integer.toHexString(i)+ct.get_rootNode().getHash();
+            while(true){
+                int temp = (int)(Math.random()*Integer.MAX_VALUE);
+                message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 encode = byte2Hex(md.digest());
@@ -73,7 +74,7 @@ public class Block{
 		this.timestamp = new Date().getTime();
         target = t;
         try {
-            for(int i=0; i<Integer.MAX_VALUE; i++){
+            while(true){
                 int temp = (int)(Math.random()*Integer.MAX_VALUE);
                 message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
@@ -128,4 +129,14 @@ public class Block{
         }
         return sb.toString().trim();
 	}
+
+    public boolean validate() {
+        String true_hashRoot = currentT.get_rootNode().getHash();
+        if (!true_hashRoot.equals(hashRoot)){
+            return false;
+        }
+
+        return true;
+
+    }
 }
