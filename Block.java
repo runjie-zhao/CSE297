@@ -131,8 +131,22 @@ public class Block{
         if (!true_hashRoot.equals(hashRoot)){
             return false;
         }
-
-        return true;
-
+        String message = nonce+hashRoot;
+        MessageDigest md;
+        String encode="";
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            md.update(message.getBytes("UTF-8"));
+            encode = byte2Hex(md.digest());
+            if (encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch(Exception e) {
+            System.out.println("Either no such algorithm or no supported encoding");
+            System.exit(0);
+        }
+        return false;
     }
 }
