@@ -120,7 +120,7 @@ public class Block{
     }
 
     //Convert byte to hex
-	public String byte2Hex(byte[] bytes) {
+	public static String byte2Hex(byte[] bytes) {
 		String hex = "";
 		StringBuilder sb = new StringBuilder("");
         for (int n = 0; n < bytes.length; n++) {
@@ -130,13 +130,31 @@ public class Block{
         return sb.toString().trim();
 	}
 
+    public Tree getCT(){
+        return currentT;
+    }
+
     public boolean validate() {
         String true_hashRoot = currentT.get_rootNode().getHash();
         if (!true_hashRoot.equals(hashRoot)){
             return false;
         }
-
-        return true;
-
+        String message = nonce+hashRoot;
+        MessageDigest md;
+        String encode="";
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            md.update(message.getBytes("UTF-8"));
+            encode = byte2Hex(md.digest());
+            if (encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch(Exception e) {
+            System.out.println("Either no such algorithm or no supported encoding");
+            System.exit(0);
+        }
+        return false;
     }
 }
