@@ -6,30 +6,76 @@ public class Cli {
 	public static ArrayList<Block> read_file(String filename){
 		String input = filename;
 		File file = new File(input);
-		System.out.println("\n");
-		System.out.println("\n");
 		BufferedReader reader;
+		ArrayList<Block> block_list = new ArrayList<>();
 		try {
 			reader = new BufferedReader(new FileReader(file));
 			String tempStr;
-			//Block temp = new Block();
+			
+			//Create block
+			Block block = new Block();
+			
+			//Create arraylist for value and address
+			
+			ArrayList<String> address = new ArrayList<>();
+			ArrayList<Integer> value = new ArrayList<>();
+			
 			while ((tempStr = reader.readLine()) != null) {
+				if(tempStr.equals("BEGIN HEADER")) {
+					block = new Block();
+					address = new ArrayList<>();
+					value = new ArrayList<>();
+					continue;
+				}
+				
+				//the block ends, add the block to the blocklist
+				if(tempStr.equals("END BLOCK")) {
+					Tree tree = new Tree(address, value);
+					block.currentT = tree;
+					block_list.add(block);
+					block = new Block();
+					continue;
+				}
+				
 				if(tempStr.equals("BEGIN BLOCK")||tempStr.equals("END BLOCK")||tempStr.equals("BEGIN HEADER")) {
 					continue;
 				}
 				if(tempStr.contains("previous block:")) {
-					System.out.println(tempStr.substring(16));
+					//System.out.println(tempStr.substring(16));
+					block.previoushash = tempStr.substring(16);
 					continue;
-				}else if(tempStr.contains("previous block:")) {
-					
+				}else if(tempStr.contains("root:")) {
+					//System.out.println(tempStr.substring(6));
+					block.hashRoot = tempStr.substring(6);
+					continue;
+				}else if(tempStr.contains("timestamp: ")) {
+					//System.out.println(tempStr.substring(11));
+					block.timestamp = Long.valueOf(tempStr.substring(11));
+					continue;
+				}else if(tempStr.contains("difficulty target:")) {
+					//System.out.println(tempStr.substring(19));
+					block.target = Double.valueOf(tempStr.substring(19));;
+					continue;
+				}else if(tempStr.contains("nonce:")) {
+					//System.out.println(tempStr.substring(7));
+					block.nonce = tempStr.substring(7);
+					continue;
+				}else {
+					//System.out.println(tempStr);
+					String[] arr = tempStr.split("\\s+");
+					if(arr.length == 2) {
+						address.add(arr[0]);
+						value.add(Integer.parseInt(arr[1]));
+					}
+					continue;
 				}
-				System.out.println(tempStr);
 			}
+			//return block_list;
 		} catch (IOException e) {
 			System.out.println("File Cannot Be Found");
 			System.exit(0);
 		}
-		return null;
+		return block_list;
 	}
 	
 	public static void main(String[] args) {
@@ -108,6 +154,35 @@ public class Cli {
 			System.out.println("File Cannot Be Written");
 				System.exit(0);
 		}
-		read_file(filename);
+		ArrayList<Block> temp_list = read_file(filename);
+		Scanner input  = new Scanner(System.in);
+		while(true) {
+			System.out.println("Please enter the option number");
+			System.out.println("1. Validation");
+			System.out.println("2. Membership");
+			String choice = input.nextLine();
+			if(choice.equals("1")) {
+				
+			}else if(choice.equals("2")){
+				
+			}else if(choice.equals("0")) {
+				break;
+			}else {
+				System.out.println("Please enter a correct option");
+			}
+		}
+		//test
+		/*
+		System.out.println("size " + temp_list.size());
+		for(int i = 0; i < temp_list.size(); i++) {
+			System.out.println("pre: " + temp_list.get(i).previoushash);
+			System.out.println("hashroot: " + temp_list.get(i).hashRoot);
+			System.out.println("time: " + temp_list.get(i).timestamp);
+			System.out.println("nonce: " + temp_list.get(i).nonce);
+			System.out.println("target: " + temp_list.get(i).target);
+			System.out.println("Tree: " + temp_list.get(i).nonce);
+			System.out.println();
+		}*/
+		//test
 	}
 }
