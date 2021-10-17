@@ -45,7 +45,7 @@ public class Blockchain {
         int index2 = -1;
         for(int i=0;i<blocks.size();i++){
             for(int j=0;j<blocks.get(i).getCT().node_list.size();j++){
-                if(address.equals(blocks.get(i).getCT().node_list.get(j).getAddress)){
+                if(address.equals(blocks.get(i).getCT().node_list.get(j).getAddress())){
                     index1 = i;
                     index2 = j;
                     break;
@@ -64,7 +64,7 @@ public class Blockchain {
             String message = "";
             MessageDigest md;
             String encode = "";
-            for(int i=0;i<blocks.get(index1).getCT().node_list.size()){
+            for(int i=0;i<blocks.get(index1).getCT().node_list.size();i++){
                 message = blocks.get(index1).getCT().node_list.get(i).getAddress() + blocks.get(index1).getCT().node_list.get(i).getValue();
                 try {
                     md = MessageDigest.getInstance("SHA-256");
@@ -80,11 +80,11 @@ public class Blockchain {
             results.add(hashes1.get(index2));
             while(hashes1.size()>1){
                 for(int i=0;i<hashes1.size();i++){
-                    hahses2.add(hashes1.get(i));
+                    hashes2.add(hashes1.get(i));
                 }
                 hashes1 = new ArrayList<String>();
-                for(int i=0;i<hahses2.size();i+=2){
-                    message = hashes2.get(i)+hahses2.get(i+1);
+                for(int i=0;i<hashes2.size();i+=2){
+                    message = hashes2.get(i)+hashes2.get(i+1);
                     try {
                         md = MessageDigest.getInstance("SHA-256");
                         md.update(message.getBytes("UTF-8"));
@@ -103,7 +103,7 @@ public class Blockchain {
                         results.add(hashes1.get(i/2));
                     }
                 }
-                if(hahses2.size()%2!=0){
+                if(hashes2.size()%2!=0){
                     hashes1.add(hashes2.get(hashes2.size()-1));
                 }
             }
@@ -125,4 +125,14 @@ public class Blockchain {
         }
         return true;
     }
+
+    public static String byte2Hex(byte[] bytes) {
+		String hex = "";
+		StringBuilder sb = new StringBuilder("");
+        for (int n = 0; n < bytes.length; n++) {
+            hex = Integer.toHexString(bytes[n] & 0xFF);
+            sb.append((hex.length() == 1) ? "0" + hex : hex);
+        }
+        return sb.toString().trim();
+	}
 }
