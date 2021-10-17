@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Cli {
-	
+	static ArrayList<Block> blocks = new ArrayList<>();
 	public static ArrayList<Block> read_file(String filename){
 		String input = filename;
 		File file = new File(input);
@@ -82,7 +82,7 @@ public class Cli {
 	}
 	
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		/*Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the txt files");
 		String input_string = "";
 		try {
@@ -156,8 +156,8 @@ public class Cli {
 		} catch (IOException e) {
 			System.out.println("File Cannot Be Written");
 				System.exit(0);
-		}
-		ArrayList<Block> temp_list = read_file(filename);
+		}*/
+		//ArrayList<Block> temp_list = read_file(filename);
 		Scanner input  = new Scanner(System.in);
 		while(true) {
 			System.out.println("Please enter the option number");
@@ -170,14 +170,14 @@ public class Cli {
 				System.out.println("Please enter the txt files");
 				String input_string1 = "";
 				try {
-					input_string1 = sc.nextLine();
+					input_string1 = input.nextLine();
 				} catch (Exception e) {
 					System.out.println("Please enter the useable input value");
 					System.exit(0);
 				}
 				try {
 					ArrayList<Block> blocks1 = read_file(input_string1);
-					if(blocks.size()<2) {
+					if(blocks1.size()<2) {
 						for (Block block : blocks1) {
 							//System.out.println(block.printBlock(true));
 							System.out.println("Validation Result is " + block.validate());
@@ -201,7 +201,7 @@ public class Cli {
 				System.out.println("Please enter the txt files");
 				String input_string1 = "";
 				try {
-					input_string1 = sc.nextLine();
+					input_string1 = input.nextLine();
 				} catch (Exception e) {
 					System.out.println("Please enter the useable input value");
 					System.exit(0);
@@ -260,8 +260,8 @@ public class Cli {
 				}
 				File output1 = new File(filepaths1[0].substring(0, filepaths1[0].length() - 4) + ".block.out");
 				try (BufferedWriter ostream = new BufferedWriter(new FileWriter(output1))) {
-					for (int i = blocks.size()-1; i >= 0; i--) {
-						ostream.write(blocks.get(i).printBlock(true));
+					for (int i = blocks1.size()-1; i >= 0; i--) {
+						ostream.write(blocks1.get(i).printBlock(true));
 					}
 					ostream.newLine();
 					ostream.close();
@@ -269,6 +269,7 @@ public class Cli {
 					System.out.println("File Cannot Be Written");
 						System.exit(0);
 				}
+				blocks = blocks1;
 			}else if(choice.equals("0")) {
 				break;
 			}else {
@@ -288,6 +289,6 @@ public class Cli {
 			System.out.println();
 		}*/
 		//test
-		read_file(filename);
+		//read_file(filename);
 	}
 }
