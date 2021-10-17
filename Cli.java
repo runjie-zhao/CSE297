@@ -6,30 +6,79 @@ public class Cli {
 	public static ArrayList<Block> read_file(String filename){
 		String input = filename;
 		File file = new File(input);
-		System.out.println("\n");
-		System.out.println("\n");
 		BufferedReader reader;
+		ArrayList<Block> block_list = new ArrayList<>();
 		try {
 			reader = new BufferedReader(new FileReader(file));
 			String tempStr;
 			//Block temp = new Block();
+
+			//Create block
+			Block block = new Block();
+
+			//Create arraylist for value and address
+
+			ArrayList<String> address = new ArrayList<>();
+			ArrayList<Integer> value = new ArrayList<>();
+
 			while ((tempStr = reader.readLine()) != null) {
+				if(tempStr.equals("BEGIN HEADER")) {
+					block = new Block();
+					address = new ArrayList<>();
+					value = new ArrayList<>();
+					continue;
+				}
+
+				//the block ends, add the block to the blocklist
+				if(tempStr.equals("END BLOCK")) {
+					Tree tree = new Tree(address, value);
+					block.currentT = tree;
+					block_list.add(block);
+					block = new Block();
+					continue;
+				}
+
 				if(tempStr.equals("BEGIN BLOCK")||tempStr.equals("END BLOCK")||tempStr.equals("BEGIN HEADER")) {
 					continue;
 				}
 				if(tempStr.contains("previous block:")) {
-					System.out.println(tempStr.substring(16));
+					//System.out.println(tempStr.substring(16));
+					//System.out.println(tempStr.substring(16));
+					block.previoushash = tempStr.substring(16);
 					continue;
-				}else if(tempStr.contains("previous block:")) {
-					
+				}else if(tempStr.contains("root:")) {
+					//System.out.println(tempStr.substring(6));
+					block.hashRoot = tempStr.substring(6);
+					continue;
+				}else if(tempStr.contains("timestamp: ")) {
+					//System.out.println(tempStr.substring(11));
+					block.timestamp = Long.valueOf(tempStr.substring(11));
+					continue;
+				}else if(tempStr.contains("difficulty target:")) {
+					//System.out.println(tempStr.substring(19));
+					block.target = Double.valueOf(tempStr.substring(19));;
+					continue;
+				}else if(tempStr.contains("nonce:")) {
+					//System.out.println(tempStr.substring(7));
+					block.nonce = tempStr.substring(7);
+					continue;
+				}else {
+					//System.out.println(tempStr);
+					String[] arr = tempStr.split("\\s+");
+					if(arr.length == 2) {
+						address.add(arr[0]);
+						value.add(Integer.parseInt(arr[1]));
+					}
+					continue;
 				}
-				System.out.println(tempStr);
+				//System.out.println(tempStr);
 			}
+			//return block_list;
 		} catch (IOException e) {
 			System.out.println("File Cannot Be Found");
 			System.exit(0);
 		}
-		return null;
+		return block_list;
 	}
 	
 	public static void main(String[] args) {
@@ -108,7 +157,6 @@ public class Cli {
 			System.out.println("File Cannot Be Written");
 				System.exit(0);
 		}
-<<<<<<< HEAD
 		ArrayList<Block> temp_list = read_file(filename);
 		Scanner input  = new Scanner(System.in);
 		while(true) {
@@ -284,8 +332,6 @@ public class Cli {
 			System.out.println();
 		}*/
 		//test
-=======
 		read_file(filename);
->>>>>>> ce252930661cbdfcd0c5e9a974467f7e701c476f
 	}
 }
