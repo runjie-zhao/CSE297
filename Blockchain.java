@@ -80,7 +80,7 @@ public class Blockchain {
                     System.exit(0);
                 }
                 hashes1.add(encode);
-                results.add(encode);
+                // results.add(encode);
             }
             results.add(hashes1.get(index2));
             while(hashes1.size()>1){
