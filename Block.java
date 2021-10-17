@@ -8,6 +8,9 @@ public class Block{
     String nonce;
 	double target;
     Tree currentT;
+    
+    public Block() {}
+    
     public Block(Tree ct, Block b, double t) {
         currentT = ct;
         String message = b.previoushash+b.hashRoot+b.timestamp+b.nonce+b.target;
@@ -35,8 +38,9 @@ public class Block{
 		this.timestamp = new Date().getTime();
         target = t;
         try {
-            for(int i=0; i<Integer.MAX_VALUE; i++){
-                message = Integer.toHexString(i)+ct.get_rootNode().getHash();
+            while(true){
+                int temp = (int)(Math.random()*Integer.MAX_VALUE);
+                message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 encode = byte2Hex(md.digest());
@@ -125,6 +129,10 @@ public class Block{
         }
         return sb.toString().trim();
 	}
+
+    public Tree getCT(){
+        return currentT;
+    }
 
     public boolean validate() {
         String true_hashRoot = currentT.get_rootNode().getHash();
