@@ -5,8 +5,13 @@ public class Blockchain {
     private ArrayList<Block> blocks;
     private ArrayList<String> results;
     
+    public ArrayList<String> get_Res(){
+    	return this.results;
+    }
+    
     public  Blockchain (ArrayList<Block> blocks){
         this.blocks = blocks;
+        this.results = new ArrayList<>();
     }
 
     public boolean validate() {
@@ -75,15 +80,17 @@ public class Blockchain {
                     System.exit(0);
                 }
                 hashes1.add(encode);
+                System.out.println(encode);
                 results.add(encode);
             }
             results.add(hashes1.get(index2));
             while(hashes1.size()>1){
+            	hashes2 = new ArrayList<String>();
                 for(int i=0;i<hashes1.size();i++){
                     hashes2.add(hashes1.get(i));
                 }
                 hashes1 = new ArrayList<String>();
-                for(int i=0;i<hashes2.size();i+=2){
+                for(int i=0;i<hashes2.size()-1;i+=2){
                     message = hashes2.get(i)+hashes2.get(i+1);
                     try {
                         md = MessageDigest.getInstance("SHA-256");
