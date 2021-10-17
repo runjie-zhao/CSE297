@@ -126,4 +126,14 @@ public class Block{
         }
         return sb.toString().trim();
 	}
+
+    public boolean validate() {
+        String true_hashRoot = currentT.get_rootNode().getHash();
+        if (!true_hashRoot.equals(hashRoot)){
+            return false;
+        }
+
+        return true;
+
+    }
 }
