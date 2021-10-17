@@ -127,6 +127,10 @@ public class Block{
         return sb.toString().trim();
 	}
 
+    public Tree getCT(){
+        return currentT;
+    }
+
     public boolean validate() {
         String true_hashRoot = currentT.get_rootNode().getHash();
         if (!true_hashRoot.equals(hashRoot)){
