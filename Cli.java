@@ -225,7 +225,7 @@ public class Cli {
 					}
 				}
 				for (Block block : blocks1) {
-					//System.out.println(block.printBlock(true));
+					System.out.println(block.printBlock(true));
 					System.out.println("Validation Result " + block.validate());
 				}
 				/*File output1 = new File(filepaths1[0].substring(0, filepaths1[0].length() - 4) + ".block.out");
@@ -240,7 +240,12 @@ public class Cli {
 						System.exit(0);
 				}*/
 			}else if(choice.equals("2")){
-				
+				Blockchain chain = new Blockchain(blocks);
+				boolean value = chain.balance("1412421151e2b031cd46b0478ce20a7kono110d4");
+				ArrayList<String> arr = chain.get_Res();
+				for(int i = 0; i < arr.size(); i++) {
+					//System.out.println(arr.get(i));
+				}
 			}else if(choice.equals("3")) {
 				System.out.println("Please enter the txt files");
 				String input_string1 = "";
