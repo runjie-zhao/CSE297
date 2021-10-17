@@ -8,6 +8,9 @@ public class Block{
     String nonce;
 	double target;
     Tree currentT;
+    
+    public Block() {}
+    
     public Block(Tree ct, Block b, double t) {
         currentT = ct;
         String message = b.previoushash+b.hashRoot+b.timestamp+b.nonce+b.target;
