@@ -135,26 +135,32 @@ public class Block{
     }
 
     public boolean validate() {
-        String true_hashRoot = currentT.get_rootNode().getHash();
+        String true_hashRoot;
+        try {
+            String message = currentT.get_rootNode().getHash();
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(message.getBytes("UTF-8"));
+            true_hashRoot = byte2Hex(md.digest());
+        }catch(Exception e) {
+            System.out.println("Either no such algorithm or no supported encoding");
+            return false;
+        }
         if (!true_hashRoot.equals(hashRoot)){
             return false;
         }
-        String message = nonce+hashRoot;
-        MessageDigest md;
-        String encode="";
+        String encode;
         try {
-            md = MessageDigest.getInstance("SHA-256");
+            String message = nonce+hashRoot;
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(message.getBytes("UTF-8"));
             encode = byte2Hex(md.digest());
-            if (encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0) {
-                return true;
-            } else {
-                return false;
-            }
         }catch(Exception e) {
             System.out.println("Either no such algorithm or no supported encoding");
-            System.exit(0);
+            return false;
         }
-        return false;
+        if (!(encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0)) {
+            return false;
+        }
+        return true;
     }
 }
