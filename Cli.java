@@ -2,6 +2,36 @@ import java.util.*;
 import java.io.*;
 
 public class Cli {
+	
+	public static ArrayList<Block> read_file(String filename){
+		String input = filename;
+		File file = new File(input);
+		System.out.println("\n");
+		System.out.println("\n");
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			String tempStr;
+			//Block temp = new Block();
+			while ((tempStr = reader.readLine()) != null) {
+				if(tempStr.equals("BEGIN BLOCK")||tempStr.equals("END BLOCK")||tempStr.equals("BEGIN HEADER")) {
+					continue;
+				}
+				if(tempStr.contains("previous block:")) {
+					System.out.println(tempStr.substring(16));
+					continue;
+				}else if(tempStr.contains("previous block:")) {
+					
+				}
+				System.out.println(tempStr);
+			}
+		} catch (IOException e) {
+			System.out.println("File Cannot Be Found");
+			System.exit(0);
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the txt files");
@@ -65,6 +95,9 @@ public class Cli {
 			System.out.println(block.printBlock(true));
 		}
 		File output = new File(filepaths[0].substring(0, filepaths[0].length() - 4) + ".block.out");
+		//Get the file name
+		String filename = filepaths[0].substring(0, filepaths[0].length() - 4) + ".block.out";
+		
 		try (BufferedWriter ostream = new BufferedWriter(new FileWriter(output))) {
 			for (int i = blocks.size()-1; i >= 0; i--) {
 				ostream.write(blocks.get(i).printBlock(true));
@@ -75,6 +108,6 @@ public class Cli {
 			System.out.println("File Cannot Be Written");
 				System.exit(0);
 		}
+		read_file(filename);
 	}
-
 }
