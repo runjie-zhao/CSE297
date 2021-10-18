@@ -192,7 +192,7 @@ public class Cli {
 				}
 			}else if(choice.equals("2")){
 				Blockchain chain = new Blockchain(blocks);
-				boolean value = chain.balance("1412421151e2b031cd46b0478ce20a7kono110d4");
+				boolean value = chain.balance("fc91428771e2b031cd46b0478ce20a7auzi110f1");
 				ArrayList<String> arr = chain.get_Res();
 				for(int i = 0; i < arr.size(); i++) {
 					System.out.println(arr.get(i));
