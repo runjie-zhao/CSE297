@@ -126,6 +126,11 @@ public class Cli {
 					System.out.println("Address Not Found");
 				}
 
+<<<<<<< HEAD
+=======
+				value = chain.balance("fc91428771e2b031cd46b0478ce20a7auzi110f1");
+
+>>>>>>> 3c05177184f0a7ef28e3f99b793a45b5923ba19b
 				ArrayList<String> arr = chain.get_Res();
 				for(int i = 0; i < arr.size(); i++) {
 					System.out.println(arr.get(i));
