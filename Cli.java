@@ -192,7 +192,14 @@ public class Cli {
 				}
 			}else if(choice.equals("2")){
 				Blockchain chain = new Blockchain(blocks);
-				boolean value = chain.balance("1412421151e2b031cd46b0478ce20a7kono110d4");
+				System.out.println("Please enter an address");
+				String add = input.nextLine();
+				boolean value = chain.balance(add);
+				if(value) {
+					System.out.println("Address Found");
+				}else {
+					System.out.println("Address Not Found");
+				}
 				ArrayList<String> arr = chain.get_Res();
 				for(int i = 0; i < arr.size(); i++) {
 					System.out.println(arr.get(i));
