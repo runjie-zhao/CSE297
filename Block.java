@@ -43,9 +43,9 @@ public class Block{
                 message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
-                encode = byte2Hex(md.digest());
-                if(encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0){
-                    nonce = encode;
+                byte[] hash = md.digest();
+                if (ByteArrayCompare(hash)) {
+                    nonce = byte2Hex(hash);
                     break;
                 }
             }
@@ -79,9 +79,9 @@ public class Block{
                 message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
-                encode = byte2Hex(md.digest());
-                if(encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0){
-                    nonce = encode;
+                byte[] hash = md.digest();
+                if (ByteArrayCompare(hash)) {
+                    nonce = byte2Hex(hash);
                     break;
                 }
             }
@@ -148,19 +148,34 @@ public class Block{
         if (!true_hashRoot.equals(hashRoot)){
             return false;
         }
-        String encode;
+        byte[] hash;
         try {
             String message = nonce+hashRoot;
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(message.getBytes("UTF-8"));
-            encode = byte2Hex(md.digest());
+            hash = md.digest();
         }catch(Exception e) {
             System.out.println("Either no such algorithm or no supported encoding");
             return false;
         }
-        if (!(encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0)) {
+        if (!ByteArrayCompare(hash)) {
             return false;
         }
         return true;
+    }
+    boolean ByteArrayCompare(byte[]array){
+        int length = array.length;
+        byte[] target_hash = new byte[length];
+        for (int i = 0; i < target_hash.length; i++) {
+            target_hash[i] = (byte) (Byte.MAX_VALUE * target);
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (array[i]>target_hash[i]) {
+                return true;
+            } else if (array[i]<target_hash[i]){
+                return false;
+            }
+        }
+        return false;
     }
 }
