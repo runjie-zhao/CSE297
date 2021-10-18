@@ -204,7 +204,7 @@ public class Cli {
 					System.out.println("Address Not Found");
 				}
 
-				boolean value = chain.balance("fc91428771e2b031cd46b0478ce20a7auzi110f1");
+				value = chain.balance("fc91428771e2b031cd46b0478ce20a7auzi110f1");
 
 				ArrayList<String> arr = chain.get_Res();
 				for(int i = 0; i < arr.size(); i++) {
