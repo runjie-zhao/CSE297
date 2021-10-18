@@ -2,9 +2,15 @@ BEGIN BLOCK
 BEGIN HEADER
 previous block: 0
 root: fd8e55c1ca219094011555addc6ce5a5be11a6d2b9b4890856006ab4b3b45e5f
+<<<<<<< HEAD
 timestamp: 1634508803493
 difficulty target: 0.5
 nonce: 6e654c1cceee7d89327cd8b7439e3c0a8a4c6433a7ef734b1b50bca5d820854f
+=======
+timestamp: 1634515624585
+difficulty target: 0.5
+nonce: 278e13e031e71acafdbae831f1612ad3fceaf0389ce2fa18ac6be62fd71ebf47
+>>>>>>> 36bf1f886b2b8d2cd5a0c7a34864fccb4078f59a
 1412421151e2b031cd46b0478ce20a7kono110d4 1311994
 dsfads8771e2b031cd46b0478ce20a7diod110d3 1311994
 fc9fsd8771e2b031cd46b0478ce20a7af0b110d2 1311994

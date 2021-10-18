@@ -104,7 +104,7 @@ public class Blockchain {
                         results.add(hashes2.get(i+1));
                         results.add(hashes1.get(i/2));
                     }
-                    else if(i==index2+1){
+                    else if(i+1==index2){
                         results.add(hashes2.get(i));
                         results.add(hashes1.get(i/2));
                     }

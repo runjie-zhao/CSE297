@@ -89,8 +89,10 @@ public class Cli {
 			input_string = sc.nextLine();
 		} catch (Exception e) {
 			System.out.println("Please enter the useable input value");
+			sc.close();
 			System.exit(0);
 		}
+		sc.close();
 		String[] filepaths = input_string.split("\\s+");
 		ArrayList<Block> blocks = new ArrayList<>();
 		for (String filepath : filepaths) {
@@ -192,6 +194,7 @@ public class Cli {
 				}
 			}else if(choice.equals("2")){
 				Blockchain chain = new Blockchain(blocks);
+
 				System.out.println("Please enter an address");
 				String add = input.nextLine();
 				boolean value = chain.balance(add);
@@ -200,6 +203,9 @@ public class Cli {
 				}else {
 					System.out.println("Address Not Found");
 				}
+
+				boolean value = chain.balance("fc91428771e2b031cd46b0478ce20a7auzi110f1");
+
 				ArrayList<String> arr = chain.get_Res();
 				for(int i = 0; i < arr.size(); i++) {
 					System.out.println(arr.get(i));
@@ -283,19 +289,5 @@ public class Cli {
 				System.out.println("Please enter a correct option");
 			}
 		}
-		//test
-		/*
-		System.out.println("size " + temp_list.size());
-		for(int i = 0; i < temp_list.size(); i++) {
-			System.out.println("pre: " + temp_list.get(i).previoushash);
-			System.out.println("hashroot: " + temp_list.get(i).hashRoot);
-			System.out.println("time: " + temp_list.get(i).timestamp);
-			System.out.println("nonce: " + temp_list.get(i).nonce);
-			System.out.println("target: " + temp_list.get(i).target);
-			System.out.println("Tree: " + temp_list.get(i).nonce);
-			System.out.println();
-		}*/
-		//test
-		//read_file(filename);
 	}
 }
