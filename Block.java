@@ -8,6 +8,9 @@ public class Block{
     String nonce;
 	double target;
     Tree currentT;
+    
+    public Block() {}
+    
     public Block(Tree ct, Block b, double t) {
         currentT = ct;
         String message = b.previoushash+b.hashRoot+b.timestamp+b.nonce+b.target;
@@ -35,8 +38,9 @@ public class Block{
 		this.timestamp = new Date().getTime();
         target = t;
         try {
-            for(int i=0; i<Integer.MAX_VALUE; i++){
-                message = Integer.toHexString(i)+ct.get_rootNode().getHash();
+            while(true){
+                int temp = (int)(Math.random()*Integer.MAX_VALUE);
+                message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 encode = byte2Hex(md.digest());
@@ -70,8 +74,9 @@ public class Block{
 		this.timestamp = new Date().getTime();
         target = t;
         try {
-            for(int i=0; i<Integer.MAX_VALUE; i++){
-                message = Integer.toHexString(i)+ct.get_rootNode().getHash();;
+            while(true){
+                int temp = (int)(Math.random()*Integer.MAX_VALUE);
+                message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 encode = byte2Hex(md.digest());
@@ -115,7 +120,7 @@ public class Block{
     }
 
     //Convert byte to hex
-	public String byte2Hex(byte[] bytes) {
+	public static String byte2Hex(byte[] bytes) {
 		String hex = "";
 		StringBuilder sb = new StringBuilder("");
         for (int n = 0; n < bytes.length; n++) {
@@ -124,4 +129,38 @@ public class Block{
         }
         return sb.toString().trim();
 	}
+
+    public Tree getCT(){
+        return currentT;
+    }
+
+    public boolean validate() {
+        String true_hashRoot;
+        try {
+            String message = currentT.get_rootNode().getHash();
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(message.getBytes("UTF-8"));
+            true_hashRoot = byte2Hex(md.digest());
+        }catch(Exception e) {
+            System.out.println("Either no such algorithm or no supported encoding");
+            return false;
+        }
+        if (!true_hashRoot.equals(hashRoot)){
+            return false;
+        }
+        String encode;
+        try {
+            String message = nonce+hashRoot;
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(message.getBytes("UTF-8"));
+            encode = byte2Hex(md.digest());
+        }catch(Exception e) {
+            System.out.println("Either no such algorithm or no supported encoding");
+            return false;
+        }
+        if (!(encode.compareTo(Long.toHexString(0x7FFFFFFF).toUpperCase())<=0)) {
+            return false;
+        }
+        return true;
+    }
 }
