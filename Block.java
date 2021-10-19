@@ -168,14 +168,14 @@ public class Block{
     }
     boolean ByteArrayCompare(byte[]array){
         int length = array.length;
-        byte[] target_hash = new byte[length];
+        int[] target_hash = new int[length];
         for (int i = 0; i < target_hash.length; i++) {
-            target_hash[i] = (byte) (Byte.MAX_VALUE * target);
+            target_hash[i] = (int) (255 * target);
         }
         for (int i = 0; i < array.length; i++) {
-            if (array[i]>target_hash[i]) {
+            if (Byte.toUnsignedInt(array[i])>target_hash[i]) {
                 return true;
-            } else if (array[i]<target_hash[i]){
+            } else if (Byte.toUnsignedInt(array[i])<target_hash[i]){
                 return false;
             }
         }
