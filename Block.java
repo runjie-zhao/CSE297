@@ -45,7 +45,7 @@ public class Block{
                 md.update(message.getBytes("UTF-8"));
                 byte[] hash = md.digest();
                 if (ByteArrayCompare(hash)) {
-                    nonce = byte2Hex(hash);
+                    nonce = Integer.toHexString(temp);
                     break;
                 }
             }
@@ -81,7 +81,7 @@ public class Block{
                 md.update(message.getBytes("UTF-8"));
                 byte[] hash = md.digest();
                 if (ByteArrayCompare(hash)) {
-                    nonce = byte2Hex(hash);
+                    nonce = Integer.toHexString(temp);
                     break;
                 }
             }
