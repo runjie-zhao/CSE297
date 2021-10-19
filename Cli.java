@@ -206,7 +206,7 @@ public class Cli {
 				}
 				//add blocks1 content to blocks
 				for(int i = 0; i < blocks1.size(); i++) {
-					blocks.add(blocks1.get(i));
+					blocks.add(0,blocks1.get(i));
 				}
 				//blocks = blocks1;
 			}else if(choice.equals("4")) {
