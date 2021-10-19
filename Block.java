@@ -145,6 +145,8 @@ public class Block{
             System.out.println("Either no such algorithm or no supported encoding");
             return false;
         }
+        //System.out.println(true_hashRoot);
+        //System.out.println(hashRoot);
         if (!true_hashRoot.equals(hashRoot)){
             return false;
         }
@@ -159,6 +161,7 @@ public class Block{
             return false;
         }
         if (!ByteArrayCompare(hash)) {
+        	//System.out.println("here");
             return false;
         }
         return true;

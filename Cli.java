@@ -116,6 +116,7 @@ public class Cli {
 				}
 			//For balance function
 			}else if(choice.equals("2")){
+				System.out.println(blocks.get(0).previoushash);
 				Blockchain chain = new Blockchain(blocks);
 				//Test if the address exists in any of those blocks
 				System.out.println("Please enter an address");
