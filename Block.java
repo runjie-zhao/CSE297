@@ -173,9 +173,9 @@ public class Block{
             target_hash[i] = (int) (255 * target);
         }
         for (int i = 0; i < array.length; i++) {
-            if (Byte.toUnsignedInt(array[i])>target_hash[i]) {
+            if (Byte.toUnsignedInt(array[i])<target_hash[i]) {
                 return true;
-            } else if (Byte.toUnsignedInt(array[i])<target_hash[i]){
+            } else if (Byte.toUnsignedInt(array[i])>target_hash[i]){
                 return false;
             }
         }
