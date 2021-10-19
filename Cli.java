@@ -142,6 +142,18 @@ public class Cli {
 					System.out.println("Please enter the useable input value");
 					System.exit(0);
 				}
+				double number = 0.5;
+				try {
+					System.out.println("Please enter difficulty");
+					number = input.nextDouble();
+					input.nextLine();
+				}catch(Exception e) {
+					System.out.println("Please enter a correct number from 0.001 to 1");
+					continue;
+				}
+				if(number > 1 || number < 0.001) {
+					continue;
+				}
 				String[] filepaths1 = input_string1.split("\\s+");
 				ArrayList<Block> blocks1 = new ArrayList<>();
 				for (String filepath : filepaths1) {
@@ -180,10 +192,11 @@ public class Cli {
 						reader.close();
 						Tree tree = new Tree(address, values);
 						Block block;
+						//Setting the difficulty
 						if (blocks1.size() == 0) {
-							block = new Block(tree, 0.5);
+							block = new Block(tree, number);
 						} else {
-							block = new Block(tree, blocks1.get(blocks1.size() - 1), 0.5);
+							block = new Block(tree, blocks1.get(blocks1.size() - 1), number);
 						}
 						blocks1.add(block);
 					} catch (IOException e) {
