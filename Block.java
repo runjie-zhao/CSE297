@@ -40,7 +40,7 @@ public class Block{
         try {
             while(true){
                 int temp = (int)(Math.random()*Integer.MAX_VALUE);
-                message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
+                message = Integer.toHexString(temp)+hashRoot;
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 byte[] hash = md.digest();
@@ -76,7 +76,7 @@ public class Block{
         try {
             while(true){
                 int temp = (int)(Math.random()*Integer.MAX_VALUE);
-                message = Integer.toHexString(temp)+ct.get_rootNode().getHash();
+                message = Integer.toHexString(temp)+hashRoot;
                 md = MessageDigest.getInstance("SHA-256");
                 md.update(message.getBytes("UTF-8"));
                 byte[] hash = md.digest();
