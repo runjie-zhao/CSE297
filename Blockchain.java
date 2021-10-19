@@ -116,19 +116,19 @@ public class Blockchain {
             }
             results.add("previoushash: "+blocks.get(index1).previoushash+"\nhashRoot: "+blocks.get(index1).hashRoot+"\nTimeStamp: "+blocks.get(index1).timestamp+
             "\nnonce: "+blocks.get(index1).nonce+"\ntarget: "+blocks.get(index1).target);
-            for(int i=index1-1;i>=0;i--){
-                results.add(blocks.get(i).previoushash);
+            for(int i=index1;i>=0;i--){
+                message = blocks.get(i).previoushash+blocks.get(i).hashRoot+blocks.get(i).timestamp+blocks.get(i).nonce+blocks.get(i).target;
+                try {
+                    md = MessageDigest.getInstance("SHA-256");
+                    md.update(message.getBytes("UTF-8"));
+                    encode = byte2Hex(md.digest());
+                } catch (Exception e) {
+                    System.out.println("Either no such algorithm or no supported encoding");
+                    System.exit(0);
+                }
+                results.add(encode);
             }
-            message = blocks.get(0).previoushash+blocks.get(0).hashRoot+blocks.get(0).timestamp+blocks.get(0).nonce+blocks.get(0).target;
-            try {
-                md = MessageDigest.getInstance("SHA-256");
-                md.update(message.getBytes("UTF-8"));
-                encode = byte2Hex(md.digest());
-            } catch (Exception e) {
-                System.out.println("Either no such algorithm or no supported encoding");
-                System.exit(0);
-            }
-            results.add(encode);
+            
         }
         return true;
     }
