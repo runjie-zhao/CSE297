@@ -97,6 +97,7 @@ public class Cli {
 				try {
 					//Construct a list of blocks from the inputted file
 					ArrayList<Block> blocks1 = read_file(input_string1);
+					
 					if(blocks1.size() == 0) {
 						System.out.println("Read Nothing");
 						continue;
@@ -116,7 +117,7 @@ public class Cli {
 				}
 			//For balance function
 			}else if(choice.equals("2")){
-				System.out.println(blocks.get(0).previoushash);
+				//System.out.println(blocks.get(0).previoushash);
 				Blockchain chain = new Blockchain(blocks);
 				//Test if the address exists in any of those blocks
 				System.out.println("Please enter an address");
