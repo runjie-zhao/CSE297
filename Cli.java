@@ -81,6 +81,7 @@ public class Cli {
 			System.out.println("1. Validation");
 			System.out.println("2. Balance");
 			System.out.println("3. Generate a new block");
+			System.out.println("4. Generate a bad block");
 			System.out.println("0. Exit");
 			String choice = input.nextLine();
 			//If option is 1 which is validation
@@ -203,7 +204,59 @@ public class Cli {
 					System.out.println("File Cannot Be Written");
 						System.exit(0);
 				}
-				blocks = blocks1;
+				//add blocks1 content to blocks
+				for(int i = 0; i < blocks1.size(); i++) {
+					blocks.add(blocks1.get(i));
+				}
+				//blocks = blocks1;
+			}else if(choice.equals("4")) {
+				//When generating a bad block, we just change the root hash to abc
+				System.out.println("Please enter the .block.out files");
+				String input_string1 = "";
+				try {
+					input_string1 = input.nextLine();
+				} catch (Exception e) {
+					System.out.println("Please enter the useable input value");
+					System.exit(0);
+				}
+				System.out.println(input_string1.substring(input_string1.length()-9,input_string1.length()));
+				if(input_string1.length()<10 || !input_string1.substring(input_string1.length()-10,input_string1.length()).equals(".block.out")) {
+					System.out.println("You are entering a wrong block format. Please enter a correct block!!!");
+					continue;
+				}
+				File file = new File(input_string1);
+				BufferedReader reader;
+				ArrayList<String> content = new ArrayList<>();
+				try {
+					reader = new BufferedReader(new FileReader(file));
+					String tempStr;
+
+					while ((tempStr = reader.readLine()) != null) {
+						// Read Each Line
+						
+						if(tempStr.contains("root: ")) {
+							tempStr = "root: abc";
+							content.add(tempStr);
+						}else {
+							content.add(tempStr);
+						}
+					}
+					reader.close();
+				} catch (IOException e) {
+					System.out.println("File Cannot Be Found");
+					System.exit(0);
+				}
+				File output1 = new File(input_string1);
+				try (BufferedWriter ostream = new BufferedWriter(new FileWriter(output1))) {
+					for (int i = 0; i < content.size(); i++) {
+						ostream.write(content.get(i)+"\n");
+					}
+					ostream.newLine();
+					ostream.close();
+				} catch (IOException e) {
+					System.out.println("File Cannot Be Written");
+						System.exit(0);
+				}
 			}else if(choice.equals("0")) {
 				break;
 			}else {
